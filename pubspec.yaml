@@ -22,13 +22,15 @@ dependencies:
   http: ^0.13.4
   # Local cache
   shared_preferences: ^2.0.15
+  # Mocktail for testing
   mocktail: ^0.3.0
+  # Bloc Test for testing blocs
+  bloc_test: ^9.0.3
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   test: ^1.21.1
-
   flutter_lints: ^1.0.0
 
 flutter:
