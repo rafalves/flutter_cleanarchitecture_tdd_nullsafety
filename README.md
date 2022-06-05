@@ -1,16 +1,17 @@
 # flutter_architecture_tdd_resocoder
 
-A new Flutter project.
+This is my version of the Reso Coder Flutter Clean Architecture with TDD.
 
-## Getting Started
+Since the original video was released in nov/2020, many features were deprecated, so I updated this course to null safety and latest packages.
 
-This project is a starting point for a Flutter application.
+## App
 
-A few resources to get you started if this is your first Flutter project:
+A simple trivia app that gets some trivia information for the given or random number.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<img src="screenshot2.png" width="400" height="790">
+<img src="screenshot1.png" width="400" height="790">
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Original Source Code
+
+[Learn Flutter Clean Architecture & TDD - Full Course (Flutter Tutorial)](https://www.youtube.com/watch?v=dc3B_mMrZ-Q) 
+
