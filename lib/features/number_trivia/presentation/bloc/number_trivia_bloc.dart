@@ -1,4 +1,7 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_architecture_tdd_resocoder/core/error/failures.dart';
 import 'package:flutter_architecture_tdd_resocoder/core/usecases/usecase.dart';
@@ -21,7 +24,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     required this.getRandomNumberTrivia,
     required this.inputConverter,
   }) : super(NumberTriviaEmptyState()) {
-    on<GetTriviaForConcreteNumberEvent>((event, emit) {
+    on<GetTriviaForConcreteNumberEvent>((event, emit) async {
       final inputEither =
           inputConverter.stringToUnsignedInteger(event.numberString);
 
@@ -32,12 +35,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
           emit(NumberTriviaLoadingState());
           final failureOrSuccess =
               await getConcreteNumberTrivia(Params(number: integer));
-          failureOrSuccess.fold(
-            (failure) => emit(
-                NumberTriviaErrorState(message: _mapFailureToMessage(failure))),
-            (numberTrivia) =>
-                emit(NumberTriviaLoadedState(trivia: numberTrivia)),
-          );
+          _emitLoadedOrFailureState(failureOrSuccess);
         },
       );
     });
@@ -46,11 +44,19 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         emit(NumberTriviaLoadingState());
         final failureOrSuccess = await getRandomNumberTrivia(NoParams());
         failureOrSuccess.fold(
-          (failure) => emit(
-              NumberTriviaErrorState(message: _mapFailureToMessage(failure))),
-          (numberTrivia) => emit(NumberTriviaLoadedState(trivia: numberTrivia)),
-        );
+            (failure) => emit(
+                NumberTriviaErrorState(message: _mapFailureToMessage(failure))),
+            (numberTrivia) =>
+                emit(NumberTriviaLoadedState(trivia: numberTrivia)));
       },
+    );
+  }
+  void _emitLoadedOrFailureState(
+      Either<Failure, NumberTrivia> failureOrSuccess) {
+    failureOrSuccess.fold(
+      (failure) =>
+          emit(NumberTriviaErrorState(message: _mapFailureToMessage(failure))),
+      (numberTrivia) => emit(NumberTriviaLoadedState(trivia: numberTrivia)),
     );
   }
 
